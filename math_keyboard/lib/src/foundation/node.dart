@@ -213,7 +213,7 @@ class Cursor extends TeX {
     if (cursorColor == null) {
       throw FlutterError('Cursor.buildString() called without a cursorColor.');
     }
-    return '\\textcolor{${cursorColor.toHex()}}{\\cursor}';
+    return '\\textcolor{${cursorColor.toHex()}}{\\rule{0.1em}{1.2em}}';
   }
 }
 
