@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:math_keyboard/src/custom_key_icons/custom_key_icons.dart';
 import 'package:math_keyboard/src/foundation/keyboard_button.dart';
 import 'package:math_keyboard/src/widgets/decimal_separator.dart';
@@ -424,11 +424,12 @@ class _BasicButton extends StatelessWidget {
         color: Colors.white,
       );
     } else if (asTex) {
-      result = Math.tex(
-        label!,
-        options: MathOptions(
-          fontSize: 22,
-          color: Colors.white,
+      result = TeX2SVG(
+        math: label!,
+        formulaWidgetBuilder: (context, svg) => SvgPicture.string(
+          svg,
+          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          height: 22,
         ),
       );
     } else {
@@ -525,11 +526,15 @@ class _VariableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardButton(
       onTap: onTap,
-      child: Math.tex(
-        name,
-        options: MathOptions(
-          fontSize: 22,
-          color: Colors.white,
+      child: TeX2SVG(
+        math: name,
+        formulaWidgetBuilder: (context, svg) => SvgPicture.string(
+          svg,
+          colorFilter: ColorFilter.mode(
+            Colors.white,
+            BlendMode.srcIn,
+          ),
+          height: 22,
         ),
       ),
     );

@@ -15,7 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flutter_math_fork: ^0.7.3
+  flutter_tex: ^5.1.5
   holding_gesture: ^1.2.0
   intl: ^0.19.0
   math_expressions: ^2.5.0

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:math_keyboard/src/foundation/keyboard_button.dart';
 import 'package:math_keyboard/src/foundation/math2tex.dart';
@@ -27,6 +27,7 @@ class MathField extends StatefulWidget {
     this.onChanged,
     this.onSubmitted,
     this.opensKeyboard = true,
+    this.textStyle,
   });
 
   /// The controller for the math field.
@@ -115,6 +116,11 @@ class MathField extends StatefulWidget {
   ///
   /// Defaults to `true`.
   final bool opensKeyboard;
+
+  /// The text style to use for the math field.
+  ///
+  /// Defaults to `null`.
+  final TextStyle? textStyle;
 
   @override
   _MathFieldState createState() => _MathFieldState();
@@ -518,6 +524,7 @@ class _MathFieldState extends State<MathField> with TickerProviderStateMixin {
                   scrollController: _scrollController,
                   cursorOpacity: _cursorOpacity,
                   hasFocus: _focusNode.hasFocus,
+                  textStyle: widget.textStyle,
                   decoration: widget.decoration
                       .applyDefaults(Theme.of(context).inputDecorationTheme),
                 );
@@ -540,6 +547,7 @@ class _FieldPreview extends StatelessWidget {
     required this.hasFocus,
     required this.decoration,
     required this.scrollController,
+    this.textStyle,
   }) : super(key: key);
 
   /// The controller for the math field.
@@ -557,6 +565,8 @@ class _FieldPreview extends StatelessWidget {
 
   /// The decoration to show around the text field.
   final InputDecoration decoration;
+
+  final TextStyle? textStyle;
 
   // Adapted from InputDecorator._getFillColor.
   Color _getDisabledCursorColor(ThemeData themeData) {
@@ -621,10 +631,12 @@ class _FieldPreview extends StatelessWidget {
           '{${decimalSeparator(context)}}',
         );
 
+    final textSize = (textStyle?.height ?? 1) *
+        MediaQuery.of(context).textScaler.scale(textStyle?.fontSize ?? 16);
     return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: double.infinity,
-        minHeight: (decoration.isDense ?? false) ? 0: 48,
+        minHeight: (decoration.isDense ?? false) ? 0 : 48,
       ),
       child: InputDecorator(
         textAlignVertical: TextAlignVertical.center,
@@ -645,11 +657,16 @@ class _FieldPreview extends StatelessWidget {
                     // when the math field is empty. This way it matches the
                     // TextField behavior.
                     : Offset(-1, 0),
-                child: Math.tex(
-                  tex,
-                  options: MathOptions(
-                    fontSize: MathOptions.defaultFontSize,
-                    color: Theme.of(context).colorScheme.onSurface,
+                child: TeX2SVG(
+                  math: tex,
+                  formulaWidgetBuilder: (context, svg) => SvgPicture.string(
+                    svg,
+                    colorFilter: ColorFilter.mode(
+                      textStyle?.color ??
+                          Theme.of(context).colorScheme.onSurface,
+                      BlendMode.srcIn,
+                    ),
+                    height: textSize,
                   ),
                 ),
               ),

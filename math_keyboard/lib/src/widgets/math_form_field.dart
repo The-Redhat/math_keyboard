@@ -32,6 +32,7 @@ class MathFormField extends FormField<String> {
     ValueChanged<String>? onFieldSubmitted,
     AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
     FormFieldValidator<String>? validator,
+    TextStyle? textStyle,
   }) : super(
           key: key,
           initialValue:
@@ -57,6 +58,7 @@ class MathFormField extends FormField<String> {
               autofocus: autofocus,
               onChanged: onChangedHandler,
               onSubmitted: onFieldSubmitted,
+              textStyle: textStyle,
             );
           },
         );
