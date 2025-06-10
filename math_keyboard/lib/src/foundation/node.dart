@@ -213,7 +213,8 @@ class Cursor extends TeX {
     if (cursorColor == null) {
       throw FlutterError('Cursor.buildString() called without a cursorColor.');
     }
-    return '\\textcolor{${cursorColor.toHex()}}{\\rule{0.1em}{1.2em}}';
+    // Use \vline which is designed for math mode and scales with context
+    return '\\textcolor{${cursorColor.toHex()}}{\\vline}';
   }
 }
 
