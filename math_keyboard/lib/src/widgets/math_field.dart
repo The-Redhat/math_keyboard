@@ -622,7 +622,7 @@ class _FieldPreview extends StatelessWidget {
         );
 
     return ConstrainedBox(
-      constraints: const BoxConstraints(
+      constraints: BoxConstraints(
         minWidth: double.infinity,
         minHeight: (decoration.isDense ?? false) ? 0: 48,
       ),
