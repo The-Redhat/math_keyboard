@@ -426,6 +426,7 @@ class _BasicButton extends StatelessWidget {
     } else if (asTex) {
       result = TeX2SVG(
         math: label!,
+        loadingWidgetBuilder: (context) => const SizedBox.shrink(),
         formulaWidgetBuilder: (context, svg) => SvgPicture.string(
           svg,
           colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
@@ -528,6 +529,7 @@ class _VariableButton extends StatelessWidget {
       onTap: onTap,
       child: TeX2SVG(
         math: name,
+        loadingWidgetBuilder: (context) => const SizedBox.shrink(),
         formulaWidgetBuilder: (context, svg) => SvgPicture.string(
           svg,
           colorFilter: ColorFilter.mode(

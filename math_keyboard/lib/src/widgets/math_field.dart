@@ -659,6 +659,7 @@ class _FieldPreview extends StatelessWidget {
                     : Offset(-1, 0),
                 child: TeX2SVG(
                   math: tex,
+                  loadingWidgetBuilder: (context) => const SizedBox.shrink(),
                   formulaWidgetBuilder: (context, svg) => SvgPicture.string(
                     svg,
                     colorFilter: ColorFilter.mode(
